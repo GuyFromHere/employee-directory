@@ -1,28 +1,17 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import EmployeeList from "./pages/EmployeeList";
-import NavBar from "./NavBar";
-import API from "../utils/API";
+import Employees from "./pages/Employees";
+import NavBar from "./pages/NavBar";
 
 class EmployeeContainer extends Component {
 	state = {
-		search: "",
-		results: []
+		currentPage: "Home"
 	};
 
-	// When this component mounts, search the Giphy API for pictures of kittens
-	componentDidMount() {
-		this.getEmployees();
+	handlePageChange = page => {
+		this.setState({ currentPage: page })
 	}
 
-	getEmployees = query => {
-		API.getEmployees(query)
-			.then(res => this.setState({ results: res.data.data }))
-			.catch(err => console.log(err));
-	};
-
+	// keep for search if added
 	handleInputChange = event => {
 		const name = event.target.name;
 		const value = event.target.value;
@@ -37,21 +26,29 @@ class EmployeeContainer extends Component {
 		//this.searchEmployees(this.state.search);
 	};
 
-	render() {
-		return (
-			<div>
-				<Router>
-					<div>
-						<NavBar />
-						<Route exact path="/" component={Home} />
-						<Route exact path="/about" component={About} />
-						<Route exact path="/demo" component={EmployeeList} />
-					</div>
-				</Router>
-				{/* <EmployeeList results={this.state.results} /> */}
-			</div>
-		);
-	}
+  renderPageChange = () => {
+    if ( this.state.currentPage === "Home" ) {
+      return <Home />; 
+    } else if ( this.state.currentPage === "About" ) {
+      return <About />; 
+    } else if ( this.state.currentPage === "Employees" ) {
+      return <Employees />; 
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <NavBar
+          currentPage={this.state.currentPage}
+          handlePageChange={this.handlePageChange}
+        />
+		Test
+        {this.renderPageChange()}
+      </div>
+    );
+  }
+}
 }
 
 export default EmployeeContainer;

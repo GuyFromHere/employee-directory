@@ -6,7 +6,7 @@ function NavBar() {
 		<ul className="nav nav-tabs">
 			<li className="nav-item">
 				<Link
-					to="/"
+					to="/home"
 					className={window.location.pathname === "/" ? "nav-link active" : "nav-link"}
 				>
 					Home
