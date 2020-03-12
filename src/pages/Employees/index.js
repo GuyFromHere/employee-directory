@@ -3,6 +3,7 @@ import API from "../../utils/API";
 import Row from "../../components/Row";
 import Table from "../../components/Table"
 import "./style.css";
+import TableRender from "../../components/TableRender";
 
 class Employees extends Component {
 	state = {
@@ -24,6 +25,8 @@ class Employees extends Component {
 			.catch(err => console.log(err));
 	};
 
+	// callback for array sort() prototype. Use to sort object array.
+	// hard code to sort on first name for now...
 	sortFunction = (a, b) => {
 		if (a.name.first === b.name.first) {
 			return 0;
@@ -46,7 +49,7 @@ class Employees extends Component {
 							cell={item.cell}
 						/>
 			})
-			return <Table rows={newList} handleEmployeeSort={this.handleEmployeeSort} />
+			return <Table rows={newList} />
 		} else {
 			return "Sorry, I couldn't find anything.";
 		}
@@ -57,6 +60,7 @@ class Employees extends Component {
 			<div>
 				<h1>Employee List</h1>
 				{this.renderTable(this.state.results, this.state.sort)}
+				<TableRender employees={this.state.results} />
 			</div>
 		);
 	}
