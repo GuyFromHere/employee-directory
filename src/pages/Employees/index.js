@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
-import Filler from "./partials/Filler";
-import EmployeeCard from "./partials/EmployeeCard";
+import Filler from "../../components/Filler";
+import Row from "../../components/Row";
 import "./style.css";
 
 class Employees extends Component {
@@ -30,10 +30,12 @@ class Employees extends Component {
 			let newList = [];
 			for (let i = 0; i < this.state.results.length; i++) {
 				newList.push(
-					<EmployeeCard
+					<Row
 						name={this.state.results[i].name.first}
 						email={this.state.results[i].email}
 						thumbnail={this.state.results[i].picture.thumbnail}
+						phone={this.state.results[i].phone}
+						cell={this.state.results[i].cell}
 					/>
 				);
 			}
@@ -47,7 +49,18 @@ class Employees extends Component {
 		return (
 			<div>
 				<h1>Employee List</h1>
-				{this.renderEmployeesList()}
+				<table align="center">
+					<thead>
+						<th>Picture</th>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Phone</th>
+						<th>Cell</th>
+					</thead>
+					<tbody>
+						{this.renderEmployeesList()}
+					</tbody>
+				</table>
 			</div>
 		);
 	}

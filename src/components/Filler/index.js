@@ -1,7 +1,7 @@
 import React from "react";
 
-function NavBar() {
+function Filler() {
 	return `I have nothing to show you.`;
 }
 
-export default NavBar;
+export default Filler;

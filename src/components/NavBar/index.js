@@ -1,18 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./style.css";
 
 function NavBar() {
 	return (
-		<ul className="nav nav-tabs">
-			<li className="nav-item">
+		<ul>
+			<li>
 				<Link
 					to="/home"
-					className={window.location.pathname === "/" ? "nav-link active" : "nav-link"}
+					className={window.location.pathname === "/home" ? "nav-link active" : "nav-link"}
 				>
 					Home
 				</Link>
 			</li>
-			<li className="nav-item">
+			<li>
 				<Link
 					to="/about"
 					className={
@@ -22,7 +23,7 @@ function NavBar() {
 					About
 				</Link>
 			</li>
-			<li className="nav-item">
+			<li>
 				<Link
 					to="/employees"
 					className={
