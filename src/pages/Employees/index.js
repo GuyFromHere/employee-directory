@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
-import Filler from "../../components/Filler";
 import Row from "../../components/Row";
+import Table from "../../components/Table"
 import "./style.css";
 
 class Employees extends Component {
 	state = {
-		results: {}
+		results: {},
+		sort: "name"
 	};
 
 	componentDidMount() {
@@ -23,25 +24,31 @@ class Employees extends Component {
 			.catch(err => console.log(err));
 	};
 
-	renderEmployeesList = () => {
-		if (this.state.results.length > 0) {
-			console.log("employee.js renderEmployeesList");
-			console.log(this.state.results);
-			let newList = [];
-			for (let i = 0; i < this.state.results.length; i++) {
-				newList.push(
-					<Row
-						name={this.state.results[i].name.first}
-						email={this.state.results[i].email}
-						thumbnail={this.state.results[i].picture.thumbnail}
-						phone={this.state.results[i].phone}
-						cell={this.state.results[i].cell}
-					/>
-				);
-			}
-			return newList;
+	sortFunction = (a, b) => {
+		if (a.name.first === b.name.first) {
+			return 0;
 		} else {
-			return <Filler />;
+			return a.name.first < b.name.first ? -1 : 1;
+		}
+	}
+
+	renderTable = (results, sort) => {
+			if (results.length > 0) {
+			console.log("employee.js renderTable results");
+			console.log(results);
+			let newList = results.sort(this.sortFunction).map((item, index) => {
+				return <Row
+							key={index}
+							name={item.name.first}
+							email={item.email}
+							thumbnail={item.picture.thumbnail}
+							phone={item.phone}
+							cell={item.cell}
+						/>
+			})
+			return <Table rows={newList} handleEmployeeSort={this.handleEmployeeSort} />
+		} else {
+			return "Sorry, I couldn't find anything.";
 		}
 	};
 
@@ -49,18 +56,7 @@ class Employees extends Component {
 		return (
 			<div>
 				<h1>Employee List</h1>
-				<table align="center">
-					<thead>
-						<th>Picture</th>
-						<th>Name</th>
-						<th>Email</th>
-						<th>Phone</th>
-						<th>Cell</th>
-					</thead>
-					<tbody>
-						{this.renderEmployeesList()}
-					</tbody>
-				</table>
+				{this.renderTable(this.state.results, this.state.sort)}
 			</div>
 		);
 	}
