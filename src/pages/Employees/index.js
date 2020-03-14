@@ -18,33 +18,41 @@ class Employees extends Component {
 	getEmployees = () => {
 		API.getEmployees()
 			.then(res => {
-				this.setState({
-					results: res.data.results
-				});
+			const newArr = res.data.results.map(item=> {
+				return {
+					name: item.name.first,
+					email: item.email,
+					thumbnail: item.picture.thumbnail,
+					phone: item.phone,
+					cell: item.cell
+				}
 			})
-			.catch(err => console.log(err));
+			this.setState({
+				results: newArr
+			})
+			return newArr;
+		})
+		.catch(err => console.log(err));
 	};
 
 	// callback for array sort() prototype. Use to sort object array.
 	// hard code to sort on first name for now...
 	sortFunction = (a, b) => {
-		if (a.name.first === b.name.first) {
+		if (a.name === b.name) {
 			return 0;
 		} else {
-			return a.name.first < b.name.first ? -1 : 1;
+			return a.name < b.name ? -1 : 1;
 		}
 	}
 
 	renderTable = (results, sort) => {
 			if (results.length > 0) {
-			console.log("employee.js renderTable results");
-			console.log(results);
 			let newList = results.sort(this.sortFunction).map((item, index) => {
 				return <Row
 							key={index}
-							name={item.name.first}
+							name={item.name}
 							email={item.email}
-							thumbnail={item.picture.thumbnail}
+							thumbnail={item.thumbnail}
 							phone={item.phone}
 							cell={item.cell}
 						/>
