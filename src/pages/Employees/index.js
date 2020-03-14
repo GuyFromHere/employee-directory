@@ -3,12 +3,14 @@ import API from "../../utils/API";
 import Row from "../../components/Row";
 import Table from "../../components/Table"
 import "./style.css";
-import TableRender from "../../components/TableRender";
 
 class Employees extends Component {
 	state = {
 		results: {},
-		sort: "name"
+		sort: {
+			col: "name",
+			dir: "asc"
+		}
 	};
 
 	componentDidMount() {
@@ -37,15 +39,53 @@ class Employees extends Component {
 
 	// callback for array sort() prototype. Use to sort object array.
 	// hard code to sort on first name for now...
+	// set state in click function and get col and dir from there
 	sortFunction = (a, b) => {
-		if (a.name === b.name) {
-			return 0;
-		} else {
-			return a.name < b.name ? -1 : 1;
+		if ( this.state.sort.col === "name" )  {
+			if ( this.state.sort.dir === "asc" ) {
+				if (a.name === b.name) {
+					return 0;
+				} else {
+					return a.name < b.name ? -1 : 1;
+				}
+			} else if ( this.state.sort.dir === "desc" ) {
+				if (a.name === b.name) {
+					return 0;
+				} else {
+					return a.name > b.name ? -1 : 1;
+				}
+			}
 		}
+		if ( this.state.sort.col === "email" )  {
+			if ( this.state.sort.dir === "asc" ) {
+				if (a.email === b.email) {
+					return 0;
+				} else {
+					return a.email < b.email ? -1 : 1;
+				}
+			} else if ( this.state.sort.dir === "desc" ) {
+				if (a.email === b.email) {
+					return 0;
+				} else {
+					return a.email > b.email ? -1 : 1;
+				}
+			}
+		}
+		
 	}
+	
+	//
+	handleSort = (dataFromChild) => {
+	   this.setState({
+		   sort: {
+			   col: dataFromChild.col,
+			   dir: dataFromChild.dir
+		   }
+	   })
 
-	renderTable = (results, sort) => {
+    }
+
+	renderTable = (results) => {
 			if (results.length > 0) {
 			let newList = results.sort(this.sortFunction).map((item, index) => {
 				return <Row
@@ -57,7 +97,7 @@ class Employees extends Component {
 							cell={item.cell}
 						/>
 			})
-			return <Table rows={newList} />
+			return <Table handleSort={this.handleSort} dir={this.state.sort.dir} rows={newList} />
 		} else {
 			return "Sorry, I couldn't find anything.";
 		}
@@ -67,8 +107,7 @@ class Employees extends Component {
 		return (
 			<div>
 				<h1>Employee List</h1>
-				{this.renderTable(this.state.results, this.state.sort)}
-				<TableRender employees={this.state.results} />
+				{this.renderTable(this.state.results)}
 			</div>
 		);
 	}
