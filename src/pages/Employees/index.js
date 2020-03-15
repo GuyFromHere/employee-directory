@@ -37,44 +37,18 @@ class Employees extends Component {
 		.catch(err => console.log(err));
 	};
 
-	// callback for array sort() prototype. Use to sort object array.
-	// hard code to sort on first name for now...
-	// set state in click function and get col and dir from there
 	sortFunction = (a, b) => {
-		if ( this.state.sort.col === "name" )  {
-			if ( this.state.sort.dir === "asc" ) {
-				if (a.name === b.name) {
-					return 0;
-				} else {
-					return a.name < b.name ? -1 : 1;
-				}
-			} else if ( this.state.sort.dir === "desc" ) {
-				if (a.name === b.name) {
-					return 0;
-				} else {
-					return a.name > b.name ? -1 : 1;
-				}
-			}
+		if (a[this.state.sort.col] === b[this.state.sort.col]) {
+			return 0;
 		}
-		if ( this.state.sort.col === "email" )  {
-			if ( this.state.sort.dir === "asc" ) {
-				if (a.email === b.email) {
-					return 0;
-				} else {
-					return a.email < b.email ? -1 : 1;
-				}
-			} else if ( this.state.sort.dir === "desc" ) {
-				if (a.email === b.email) {
-					return 0;
-				} else {
-					return a.email > b.email ? -1 : 1;
-				}
-			}
+		if ( this.state.sort.dir === "asc" ) {
+			return a[this.state.sort.col] < b[this.state.sort.col] ? -1 : 1;
+		} else {
+			return a[this.state.sort.col] > b[this.state.sort.col] ? -1 : 1;
 		}
-		
 	}
 	
-	//
+	// Get new sort state data from th element in child component
 	handleSort = (dataFromChild) => {
 	   this.setState({
 		   sort: {
