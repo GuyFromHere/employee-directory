@@ -1,31 +1,28 @@
-import React, { Component } from 'react';
-import UserContext from '../../utils/UserContext';
+import React, { useContext } from 'react';
+import './style.css';
+import FilterContext from '../../utils/FilterContext';
 
-class Select extends Component {
+function Select () {
+   const {handleFilter} = useContext(FilterContext)
 
-    render() {
-
-        return (
-            <select>
-                <option selected>None</option>
-                <option>
-                    Gender
-                    <ul>
-                        <li>Male</li>
-                        <li>Female</li>
-                    </ul>
-                </option>
-                <option>
-                    Location
-                    {/* loop through locations from results...adding test data*/}
-                    <ul>
-                        <li>Oregon</li>
-                        <li>Washington</li>
-                    </ul>
-                </option>
-            </select>
-        )
+    const handleFilterClick = (e) => {  
+        const filter = {
+            filterKey: e.target[e.target.selectedIndex].dataset.key,
+            filterValue: e.target.value
+        };
+        {handleFilter(filter)};
     }
-}
+
+    return (
+        <div id="selectFilter">
+            <span>Filter:</span>
+            <select onChange={handleFilterClick}>
+                <option className="dropdown default">None</option>
+                <option className="dropdown option" data-key="gender" value="male">Male</option>
+                <option className="dropdown option" data-key="gender" value="female">Female</option>
+            </select>
+        </div>
+    )
+}    
 
 export default Select

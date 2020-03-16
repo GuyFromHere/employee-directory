@@ -1,18 +1,52 @@
-import React, { useState, useEffect } from "react";
-import Row from '../../components/Row'
-import TableTest from '../../components/TableTest'
+import React, { useState, useEffect, useContext } from "react";
+import Row from '../../components/Row';
+import TableTest from '../../components/TableTest';
+import Select from '../../components/Select';
 import API from '../../utils/API';
 import UserContext from '../../utils/UserContext';
 import SortContext from '../../utils/SortContext';
+import FilterContext from "../../utils/FilterContext";
 import './style.css';
 
 function Home() {
+	//const {filterKey, filterValue} = useContext(FilterContext)
+	const [filter, setFilter] = useState({});
 	const [employees, setEmployees] = useState([]);
 	const [sort, setSort] = useState({});
+	// test hook to determine why Home is not updating when setFilter runs
+	const [count, setCount] = useState(0);
 
 	useEffect(() => {
-		getEmployees();
+		console.log('You clicked ${count} times.');
+		console.log('home useEffect');
+		if (typeof filterKey === "undefined"){
+			console.log('no filter');
+			getEmployees();
+		} else {
+			console.log('filter found: ' + filter.filterKey);
+			getEmployeesFilter(filter.filterKey, filter.filterValue);
+		}
 	}, []);
+
+	const getEmployeesFilter = (filter) => {
+		API.getEmployeesFilter(filter).then(res => {
+			console.log('home getEmployeesFilter')
+			console.log(res.data.results[0])
+			const newArr = res.data.results.map(item=> {
+				return {
+					name: item.name.first,
+					email: item.email,
+					thumbnail: item.picture.thumbnail,
+					phone: item.phone,
+					cell: item.cell,
+					location: item.location.state,
+					age: item.dob.age
+				}
+			})
+			setEmployees( newArr );
+			
+		}).catch(err => console.log(err))
+	}
 
 	const getEmployees = () => { 
 		API.getEmployees().then(res => {
@@ -45,18 +79,26 @@ function Home() {
 	
 	// Get new sort state data from th element in child component
 	const handleSort = (dataFromChild) => {
-		console.log('home click handlesort')
 	   setSort({
-			   column: dataFromChild.column,
-			   direction: dataFromChild.direction
-		   })
-		console.log(sort.column + ' ' + sort.direction)
+		   column: dataFromChild.column,
+		   direction: dataFromChild.direction
+	   })
     }
+
+	const handleFilter = (dataFromChild) => {
+		console.log('home handleFilter')
+		console.log(dataFromChild);
+		setFilter({
+			filterKey: dataFromChild.filterKey,
+			filterValue: dataFromChild.filterValue
+		});
+		setCount(count + 1);
+		
+	}
 
 	const renderTable = (employees) => {
 		if (employees.length > 0) {
 			let newList = employees.sort(sortFunction).map((item, index) => {
-			//let newList = employees.map((item, index) => {
 				return <Row
 						key={index}
 						name={item.name}
@@ -81,6 +123,9 @@ function Home() {
 			<UserContext.Provider value={{ employees }}>
 				<SortContext.Provider value={{ sort, handleSort }}>
 					<h1>Home</h1>
+					<FilterContext.Provider value={{ filter, handleFilter }}>
+						<Select />
+					</FilterContext.Provider>
 					{renderTable(employees)} 
 				</SortContext.Provider>
 			</UserContext.Provider>

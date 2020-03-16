@@ -11,9 +11,7 @@ function Table (props) {
             column: colId,
             direction: colCurrentSort
         }
-        console.log('table handleheaderclick - ' + colInfo.column)
         {handleSort(colInfo)};
-        console.log('table sort ' + colInfo.column + ' ' + colInfo.direction ) 
     }
         
     return (

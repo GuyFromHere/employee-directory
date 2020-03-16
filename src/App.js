@@ -7,6 +7,7 @@ import Employees from "./pages/Employees";
 import NavBar from "./components/NavBar";
 import Select from "./components/Select";
 import UserContext from "./utils/UserContext";
+import FilterContext from "./utils/FilterContext";
 
 function App() {
 	return (
@@ -14,12 +15,15 @@ function App() {
 			<div>
 				<NavBar />
 				<UserContext.Provider>
-					<Select />
+					{/* <FilterContext.Provider>
+					<Select /> */}
 					<Container>
 						<Route exact path="/about" component={About} />
 						<Route exact path="/employees" component={Employees} />
 						<Route exact path="/home" component={Home} />
+						<Route exact path="/" component={Home} />
 					</Container>
+					{/* </FilterContext.Provider> */}
 				</UserContext.Provider>
 			</div>
 		</Router>
