@@ -86,6 +86,8 @@ function Home() {
 						thumbnail={item.thumbnail}
 						phone={item.phone}
 						cell={item.cell}
+						age={item.age}
+						state={item.location}
 				/>
 			})
 			return (<Table

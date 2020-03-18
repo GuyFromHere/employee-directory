@@ -8,6 +8,8 @@ function Row(props) {
 			<td>{props.email}</td>
 			<td>{props.phone}</td>
 			<td>{props.cell}</td>
+			<td>{props.age}</td>
+			<td>{props.state}</td>
 		</tr>
 	);
 }

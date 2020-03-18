@@ -19,6 +19,9 @@ function Table (props) {
                     <th id="email" className={sort.direction === "asc" ? "desc" : "asc"} onClick={handleHeaderClick}>Email</th>
                     <th id="phone" className={sort.direction === "asc" ? "desc" : "asc"} onClick={handleHeaderClick}>Phone</th>
                     <th id="cell" className={sort.direction === "asc" ? "desc" : "asc"} onClick={handleHeaderClick}>Cell</th> 
+                    <th id="age" className={sort.direction === "asc" ? "desc" : "asc"} onClick={handleHeaderClick}>Age</th> 
+                    <th id="state" className={sort.direction === "asc" ? "desc" : "asc"} onClick={handleHeaderClick}>State</th> 
+
                 </tr>
             </thead>
 			<tbody>
