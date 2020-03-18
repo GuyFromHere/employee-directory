@@ -1,35 +1,35 @@
-import React, { Component } from "react";
-class Table extends Component{
-
-    handleHeaderClick = (e) => {
+import React, { useContext } from "react";
+import Row from '../Row';
+import SortContext from '../../utils/SortContext';
+function Table (props) { 
+    const { sort, handleSort } = useContext(SortContext)
+    
+    const handleHeaderClick = (e) => {  
         const colId = e.target.id;
         const colCurrentSort = e.target.className;
         const colInfo = {
-            col: colId,
-            dir: colCurrentSort
+            column: colId,
+            direction: colCurrentSort
         }
-         this.props.handleSort(colInfo);
-         console.log('table sort ' + colInfo.col + ' ' + colInfo.dir ) 
-     }
-
- render(props) {
-        return (
-            <table align="center">
-				<thead>
-                    <tr>
-                        <th>Picture</th>
-                        <th id="name" className={this.props.dir === "asc" ? "desc" : "asc"} onClick={this.handleHeaderClick}>Name</th>
-                        <th id="email" className={this.props.dir === "asc" ? "desc" : "asc"} onClick={this.handleHeaderClick}>Email</th>
-                        <th id="phone" className={this.props.dir === "asc" ? "desc" : "asc"} onClick={this.handleHeaderClick}>Phone</th>
-                        <th id="cell" className={this.props.dir === "asc" ? "desc" : "asc"} onClick={this.handleHeaderClick}>Cell</th>
-
-                    </tr>
-                </thead>
-				<tbody>
-                {this.props.rows}
-				</tbody>
-			</table>
-        )
+        {handleSort(colInfo)};
     }
+    
+    return (
+        <table align="center">
+			<thead>
+                <tr>
+                    <th>Picture</th>
+                    <th id="name" className={sort.direction === "asc" ? "desc" : "asc"} onClick={handleHeaderClick}>Name</th>
+                    <th id="email" className={sort.direction === "asc" ? "desc" : "asc"} onClick={handleHeaderClick}>Email</th>
+                    <th id="phone" className={sort.direction === "asc" ? "desc" : "asc"} onClick={handleHeaderClick}>Phone</th>
+                    <th id="cell" className={sort.direction === "asc" ? "desc" : "asc"} onClick={handleHeaderClick}>Cell</th> 
+                </tr>
+            </thead>
+			<tbody>
+            {props.rows} 
+			</tbody>
+		</table>
+    )
 }
+
 export default Table;

@@ -1,16 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './style.css';
-import FilterContext from '../../utils/FilterContext';
 
-function Select () {
-   const {handleFilter} = useContext(FilterContext)
+function Select (props) {
 
     const handleFilterClick = (e) => {  
         const filter = {
             filterKey: e.target[e.target.selectedIndex].dataset.key,
             filterValue: e.target.value
         };
-        {handleFilter(filter)};
+        props.handleFilter(filter);
     }
 
     return (
