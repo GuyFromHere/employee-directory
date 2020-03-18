@@ -4,17 +4,10 @@ function Table (props) {
     const { sort, handleSort } = useContext(SortContext)
     
     const handleHeaderClick = (e) => {  
-        /* const colId = e.target.id;
-        const colCurrentSort = e.target.className;
-        const colInfo = {
-            column: colId,
-            direction: colCurrentSort
-        }
-        {handleSort(colInfo)}; */
-        {handleSort({
+        handleSort({
             column: e.target.id,
             direction: e.target.className
-        })};
+        });
     }
     
     return (
