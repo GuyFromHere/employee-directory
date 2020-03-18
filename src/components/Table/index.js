@@ -1,17 +1,20 @@
 import React, { useContext } from "react";
-import Row from '../Row';
 import SortContext from '../../utils/SortContext';
 function Table (props) { 
     const { sort, handleSort } = useContext(SortContext)
     
     const handleHeaderClick = (e) => {  
-        const colId = e.target.id;
+        /* const colId = e.target.id;
         const colCurrentSort = e.target.className;
         const colInfo = {
             column: colId,
             direction: colCurrentSort
         }
-        {handleSort(colInfo)};
+        {handleSort(colInfo)}; */
+        {handleSort({
+            column: e.target.id,
+            direction: e.target.className
+        })};
     }
     
     return (

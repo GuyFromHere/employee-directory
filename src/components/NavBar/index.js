@@ -13,26 +13,7 @@ function NavBar() {
 					Home
 				</Link>
 			</li>
-			<li>
-				<Link
-					to="/about"
-					className={
-						window.location.pathname === "/about" ? "nav-link active" : "nav-link"
-					}
-				>
-					About
-				</Link>
-			</li>
-			<li>
-				<Link
-					to="/employees"
-					className={
-						window.location.pathname === "/employees" ? "nav-link active" : "nav-link"
-					}
-				>
-					Employees
-				</Link>
-			</li>
+
 		</ul>
 	);
 }

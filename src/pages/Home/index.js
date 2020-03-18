@@ -3,7 +3,6 @@ import Row from '../../components/Row';
 import Table from '../../components/Table';
 import Select from '../../components/Select';
 import API from '../../utils/API';
-import UserContext from '../../utils/UserContext';
 import SortContext from '../../utils/SortContext';
 import './style.css';
 
@@ -101,13 +100,11 @@ function Home() {
 
 	return (
 		<div>
-			<UserContext.Provider value={{ employees }}>
 				<SortContext.Provider value={{ sort, handleSort }}>
-					<h1>Home</h1>
+					<h1>Employee Directory:</h1>
 						<Select handleFilter={handleFilter}/>
 						{renderTable(employees)}
 				</SortContext.Provider>
-			</UserContext.Provider>
 		</div>
 	);
 }
