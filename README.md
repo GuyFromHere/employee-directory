@@ -40,14 +40,13 @@ Once the API is running in your environment, swap the comments on these API call
 
 Comment the bottom line and uncomment the top to use the published RandomUser API
 
-`return axios.get(BASEURL)
-//return axios.get(LOCALDB)`
+`return axios.get(BASEURL)`
+`//return axios.get(LOCALDB)`
 
 Ditto for these two lines:
 
-`
-return axios.get(BASEURL +  "&" + filter.filterKey + "=" + filter.filterValue)
-//return axios.get(LOCALDB +  "&" + filter.filterKey + "=" + filter.filterValue)`
+`return axios.get(BASEURL +  "&" + filter.filterKey + "=" + filter.filterValue)`
+`//return axios.get(LOCALDB +  "&" + filter.filterKey + "=" + filter.filterValue)`
 
 
 
